@@ -1,0 +1,48 @@
+{% extends "options-base.html" %}
+
+{% block optionsList %}
+
+<a href="options/server" class="options-link">
+	<li class="options-li">
+		<div class="li-container">
+			<h4 class="li-headline">
+				Сервер
+			</h4>
+			<p class="li-caption">
+				IP, порт, отладка
+			</p>
+		</div>
+		
+	</li>
+</a>
+
+<a href="options/photos" class="options-link">
+	<li class="options-li">
+		<div class="li-container">
+			<h4 class="li-headline">
+				Фотографии
+			</h4>
+			<p class="li-caption">
+				Папка для фото, время проверки базы и папки с фото
+			</p>
+		</div>
+	</li>
+</a>
+
+{% if not startup_done %}
+<a href="options/other" class="options-link">
+	<li class="options-li">
+		<div class="li-container">
+			<h4 class="li-headline">
+				Другое
+			</h4>
+			<p class="li-caption">
+				Завершить настройку
+			</p>
+		</div>
+	</li>
+</a>
+{% endif %}
+
+{% endblock %}
+

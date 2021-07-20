@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block generalTitle %}
+Главная
+{% endblock %}
+
+{% block content %}
+<div class="main-container">
+	<main class="holder upload">
+	    <!-- <h2>Загрузить фото</h2> -->
+	    <form enctype="multipart/form-data" method="post" class="upload">
+	        <input type="file" accept="image/*" id="file" name="file" placeholder="file test" required multiple>
+	        <label for="file">Загрузить фото</label>
+	        <button type="submit">Отправить</button>
+	    </form>
+    </main>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block generalTitle %}
+	Настройки
+{% endblock %}
+
+{% block content %}
+
+<div class="main-container">
+	<main class="options">
+		<header class="options">
+			<h2 class="options-headline">
+				<a href="/options">Настройки</a> {% block optionsSectionName %}{% endblock %}
+			</h2>
+		</header>
+		<ul class="options-list">
+			{% block optionsList %}
+				
+			{% endblock %}
+		</ul>
+	</main>
+</div>
+
+{% endblock %}
+
+{% block editor %}
+	
+{% endblock %}

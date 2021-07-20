@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block generalTitle %}
+{% block pageTitle %}{% endblock %} | Просмотр
+{% endblock %}
+
+{% block content %}
+        <div class="main-container">
+            <main class="holder">
+                {% block posts %}
+                {% endblock %}
+            </main>
+        </div>
+
+        <div class="photo-view hidden">
+            <img src="" alt="" class="window">
+            <span class="button previous" onclick="previous()"><</span>
+            <span class="button next" onclick="next()">></span>
+            <span class="button close" onclick="hideSelection()">x</span>
+        </div>
+{% endblock %}

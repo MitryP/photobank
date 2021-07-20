@@ -1,0 +1,26 @@
+{% extends "options-base.html" %}
+
+{% block optionsSectionName %}
+	/ Другое
+{% endblock %}
+
+{% block optionsList %}
+	
+	{% if not startup_done %}
+		
+		<a href="" onclick="setupDone()" class="options-link ready">
+			<li class="options-li">
+				<div class="li-container">
+					<h4 class="li-headline">
+						Завершить настройку
+					</h4>
+					<p class="li-caption">
+						Больше не показывать предложение настроить сервис на главной странице
+					</p>
+				</div>
+			</li>
+		</a>
+
+	{% endif %}
+
+{% endblock %}

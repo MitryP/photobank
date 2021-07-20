@@ -1,0 +1,51 @@
+{% extends "options-base.html" %}
+
+{% block optionsSectionName %}
+	/ Сервер
+{% endblock %}
+
+{% block optionsList %}
+	
+<a href="" onclick="setIP()" class="options-link">
+	<li class="options-li">
+		<div class="li-container">
+			<h4 class="li-headline">
+				IP адрес
+			</h4>
+			<p class="li-caption">
+				Адрес сервера в локальной сети: <span class="important">{{ server_address }}</span>
+			</p>
+		</div>
+		
+	</li>
+</a>
+
+<a href="" onclick="setPort()" class="options-link">
+	<li class="options-li">
+		<div class="li-container">
+			<h4 class="li-headline">
+				Порт
+			</h4>
+			<p class="li-caption">
+				Сервер использует порт <span class="important">{{ server_port }}</span>
+			</p>
+		</div>
+		
+	</li>
+</a>
+
+<a href="" onclick="toggleDebug()" class="options-link">
+	<li class="options-li">
+		<div class="li-container">
+			<h4 class="li-headline">
+				Отладка
+			</h4>
+			<p class="li-caption">
+				Вывод ошибок <span class="important">{{ 'включен' if server_debug else 'отключен' }}</span>
+			</p>
+		</div>
+		
+	</li>
+</a>
+
+{% endblock %}

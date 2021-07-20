@@ -1,0 +1,29 @@
+{% extends 'display.html' %}
+
+{% block pageTitle %}
+{{ date }}
+{% endblock %}
+
+{% block headline %}
+{% endblock %}
+
+{% block posts %}
+
+    {% for date in records %}
+
+    <section class="day-section">
+        <h3 class="section-headline">{{ date }}</h3>
+        <div class="container">
+
+            {% for photo in records[date] %}
+
+                <img class="thumbnail" loading="lazy" src="{{ '/thumbnail/'+photo.path.split('\\')[-2]+'/'+photo.filename }}" data-src="{{ '/get/'+photo.path.split('\\')[-2]+'/'+photo.filename }}" alt="{{ (photo.description if photo.description else photo.filename).split('.')[0] }}">
+
+            {% endfor %}
+
+        </div>
+    </section>
+
+    {% endfor %}
+
+{% endblock %}
