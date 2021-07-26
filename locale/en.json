@@ -1,0 +1,59 @@
+{
+  "project_title_localized": "PhotoBank",
+  "display_title": "Display",
+  "home_title": "Home",
+
+  "startup_greeting": "Hi! Configure me ;)",
+  "startup_explanation": "Go to settings to setup indexing and downloading folder, language and server properties",
+  "popup_button_ok": "Go",
+  "popup_button_cancel": "Later",
+
+  "search_input_placeholder": "Search photos..",
+
+  "menu_button_upload": "Upload photos",
+  "menu_button_options": "Options",
+
+  "upload_page_title": "Upload page",
+  "upload_label": "Upload photos",
+  "upload_button": "Send",
+
+  "options_label": "Settings",
+  "options_server_label": "Server",
+  "options_base_server_description": "IP, port, debug",
+  "options_server_host_headline": "IP-address",
+  "options_server_host_description": "Server address in the local network:",
+  "options_server_port_headline": "Port",
+  "options_server_port_description": "Server is using port",
+  "options_server_debug_headline": "Debug",
+  "options_server_debug_description": "Detailed errors output is",
+  "options_enabled": "enabled",
+  "options_disabled": "disabled",
+
+  "options_photos_label": "Photos",
+  "options_base_photos_description": "Photos folder, timeouts for indexing folder and database",
+  "options_photos_path_headline": "Photos folder path",
+  "options_photos_path_description": "",
+  "options_photos_database_check_timeout_headline": "Database check timeout",
+  "options_photos_database_check_timeout_description": "Timeout between full revisions:",
+  "options_photos_database_check_timeout_description_warning": "Caution! It will take a long time if you have many photos and weak PC!",
+  "options_photos_folder_check_timeout_headline": "Photos folder index timeout",
+  "options_photos_folder_check_timeout_description": "Timeout between searches for new photos in the folder:",
+  "options_photos_folder_check_timeout_description_warning": "It takes from 1 to 10 seconds depending on photos quantity",
+  "options_seconds": "seconds",
+  "options_photos_manual_indexing_headline": "Manual indexing",
+  "options_photos_manual_indexing_description": "Manually start database and upload folder indexing",
+
+  "options_misc_label": "Other",
+  "options_base_misc_description": "Language, disable startup notification",
+  "options_misc_setup_done_headline": "Startup done",
+  "options_misc_setup_done_description": "Don't show startup offer at the main page",
+  "options_misc_language_headline": "Language (fully applies after server restart)",
+  "options_misc_language_selected_language": "Selected language:",
+  "options_misc_language_available_languages": "Available localizations:",
+
+  "server_answer_incorrect_value": "Incorrect value!",
+  "server_answer_reload_to_continue": "Restart server to apply changes",
+  "server_answer_not_folder": "Given path is not a folder",
+  "server_answer_folder_drive": "A photos folder must be on the same logic disk with the app",
+  "server_answer_oops_it_seems_not": "Oops! It doesn't come across as"
+}

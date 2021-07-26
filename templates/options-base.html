@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block generalTitle %}
-	Настройки
+	{{ lang['options_label'] }}
 {% endblock %}
 
 {% block content %}
@@ -10,7 +10,7 @@
 	<main class="options">
 		<header class="options">
 			<h2 class="options-headline">
-				<a href="/options">Настройки</a> {% block optionsSectionName %}{% endblock %}
+				<a href="/options">{{ lang['options_label'] }}</a> {% block optionsSectionName %}{% endblock %}
 			</h2>
 		</header>
 		<ul class="options-list">

@@ -1,17 +1,21 @@
 from datetime import datetime
 import configparser
-import functools, time
+import functools
+import time
+import json
+# from typing import Optional
 
 import exifread
 import os
 from datify import Datify
 from PIL import Image
-from flask import Flask, render_template, request, redirect, url_for, send_from_directory, send_file
+from flask import Flask, render_template, request, redirect, url_for, send_file
 from werkzeug.datastructures import FileStorage
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+APP_CRASH = False
 
 
 def save_config():
@@ -33,6 +37,7 @@ if not os.path.exists('config.ini'):
         'upload_folder_index_timeout': 300
     }
     config['MISC'] = {
+        'language': 'en',
         'setup_done': 'no',
     }
     save_config()
@@ -51,44 +56,35 @@ db = SQLAlchemy(app)
 database_index_timeout = config['PHOTO'].getint('database_index_timeout')
 upload_folder_index_timeout = config['PHOTO'].getint('upload_folder_index_timeout')
 
-# ALREADY_INDEXED = False
-# POSTPONE_STARTUP = False
-
 LAST_DATABASE_INDEX = None
 LAST_FOLDER_INDEX = None
 
+locales = [name.split('.')[0] for name in os.listdir('locale')]
+locales_js = [name.split('.')[0] for name in os.listdir('static/js')]
+locale = config['MISC'].get('language') if len(config['MISC'].get('language')) == 2 else 'en'
 
-# cached_data = dict()
-# def cache_decorator(function: callable):
-#     def wrapper(*args):
-#         key = f'{function.__name__}{args}'
-#         if args in cached_data:
-#             return cached_data.get(key)
 
-#         else:
-#             res = function(args)
-#             data[key] = res
-#             return res
+def load_locale(lang_name: str):
+    lang: dict = {}
+    locale_js = f"js/{lang_name if lang_name in locales_js else 'en'}.js"
+    APP_CRASH = False
 
-#     return wrapper
+    print(locale_js)
 
-# def time_benchmark(func):
-#     @functools.wraps(func)
-#     def wrapper(*args, **kwargs):
-#         try:
-#             start_time = datetime.now().timestamp()
-#             return func(*args, **kwargs)
+    try:
+        with open(f'locale/{lang_name}.json', encoding='utf-8') as f:
+            lang = json.load(f)
+    except TypeError:
+        print('Localisation not found!')
+        APP_CRASH = True
 
-#         finally:
-#             end_time = datetime.now().timestamp()
-#             print(
-#                 'Function', func.__name__, args[1:], 'took', (end_time - start_time)*1000, 'ms'
-#             )
+    return lang, locale_js, APP_CRASH
 
-#     return wrapper
+
+lang, locale_js, APP_CRASH = load_locale(locale)
+
 
 def view_function_timer(prefix='', writeto=print):
-
     def decorator(func):
         @functools.wraps(func)
         def inner(*args, **kwargs):
@@ -105,6 +101,7 @@ def view_function_timer(prefix='', writeto=print):
                     'Took',
                     '{:.2f}ms'.format(1000 * (t1 - t0)),
                 )
+
         return inner
 
     return decorator
@@ -156,13 +153,14 @@ def delete_duplicates():
 
 
 @view_function_timer()
-def indexDatabase():
+def index_database():
     global LAST_DATABASE_INDEX
 
     for photo in Photo.query.all():
         # print('looking at', photo.path)
         # print('exists' if os.path.exists(photo.path) else 'not exists')
-        if not os.path.exists(photo.path) or get_photo(os.path.join(photo.path.split('\\')[-2], photo.path.split('\\')[-1]).replace('\\', '/')) == 'False':
+        if not os.path.exists(photo.path) or get_photo(
+                os.path.join(photo.path.split('\\')[-2], photo.path.split('\\')[-1]).replace('\\', '/')) == 'False':
             # print('is not exists')
             Photo.query.filter(Photo.path == photo.path).delete()
         db.session.commit()
@@ -192,7 +190,7 @@ class Photo(db.Model):
 
 
 # @view_function_timer()
-def photoInDatabase(path):
+def photo_in_database(path):
     """
     Takes os PathLike strings with r'\' separators
 
@@ -208,7 +206,7 @@ def photoInDatabase(path):
 
 
 @view_function_timer()
-def indexUploadFolder():
+def index_upload_folder():
     global LAST_FOLDER_INDEX
 
     print('Indexing Upload Folder..')
@@ -227,7 +225,8 @@ def indexUploadFolder():
                 for filename in os.listdir(os.path.join(ul_folder, directory)):
                     path = os.path.join(ul_folder, directory, filename)
                     if os.path.isfile(path):
-                        if not photoInDatabase(path) and path.split('\\')[-1].split('.')[-1] in ['jpg', 'jpeg', 'png', 'tiff', 'svg']:
+                        if not photo_in_database(path) and path.split('\\')[-1].split('.')[-1] in ['jpg', 'jpeg', 'png',
+                                                                                                   'tiff', 'svg']:
                             # print('opening', path)
                             with open(path, 'rb') as stream:
                                 file = FileStorage(stream=stream.raw, filename=filename)
@@ -242,16 +241,16 @@ def indexUploadFolder():
 @view_function_timer()
 def setup():
     global LAST_DATABASE_INDEX
-    
+
     create_database_if_absent()
 
     # print('Last folder index:', LAST_FOLDER_INDEX)
     if not LAST_FOLDER_INDEX or (datetime.now() - LAST_FOLDER_INDEX).seconds > upload_folder_index_timeout:
-        indexUploadFolder()
+        index_upload_folder()
 
     # print('Last database index:', LAST_DATABASE_INDEX)
     if not LAST_DATABASE_INDEX or (datetime.now() - LAST_DATABASE_INDEX).seconds > database_index_timeout:
-        indexDatabase()
+        index_database()
 
     delete_duplicates()
 
@@ -280,17 +279,22 @@ def index():
     records = Photo.query.order_by(Photo.date.desc()).all()
     records = get_dates_dict(records)
 
-    serverMessage = {}
+    server_message = {}
+    # if not config['MISC'].getboolean('setup_done'):
+    #     server_message['headline'] = 'Привет! Настрой меня ;)'
+    #     server_message['paragraph'] = 'Перейди в настройки, чтобы установить папку для индексации и загрузки ' \
+    #                                   'фотографий, а также IP и порт сервера '
+    #     server_message['href'] = '/options'
     if not config['MISC'].getboolean('setup_done'):
-        serverMessage['headline'] = 'Привет! Настрой меня ;)'
-        serverMessage['paragraph'] = 'Перейди в настройки, чтобы установить папку для индексации и загрузки ' \
-                                     'фотографий, а также IP и порт сервера '
-        serverMessage['href'] = '/options'
+        server_message['headline'] = lang['startup_greeting']
+        server_message['paragraph'] = lang['startup_explanation']
+        server_message['href'] = '/options'
 
-    return render_template('home.html', dates_dict=records, serverMessage=serverMessage)
+    return render_template('home.html', locale=locale, lang=lang, lang_js=locale_js, dates_dict=records,
+                           serverMessage=server_message)
 
 
-def add_photo_to_database(file, path = None):
+def add_photo_to_database(file, path=None):
     try:
         if file.filename.split('.')[-1].lower() not in ['jpg', 'jpeg', 'png', 'tiff', 'svg']:
             return False
@@ -341,7 +345,7 @@ def add_photo_to_database(file, path = None):
         if Photo.query.filter_by(filename=name).first():
             return True
         # else:
-            # print('Adding to db without creating new files')
+        # print('Adding to db without creating new files')
 
     else:
         file.seek(0)
@@ -435,7 +439,7 @@ def upload():
             return 'An error occurred during adding new photo'
 
     else:
-        return render_template('upload.html')
+        return render_template('upload.html', locale=locale, lang_js=locale_js, lang=lang)
 
 
 @app.route('/get/<path:path>')
@@ -489,24 +493,26 @@ def photos_by_date(date: str):
     records = records.order_by(Photo.date.desc()).all()
     result = get_dates_dict(records)
 
-    return render_template('imagesfromdate.html', date=date, records=result)
+    return render_template('imagesfromdate.html', locale=locale, lang_js=locale_js, lang=lang, date=date, records=result)
 
 
 @app.route('/options')
 def options():
-    return render_template('options/options-main.html', startup_done=config['MISC'].getboolean('setup_done'))
+    return render_template('options/options-main.html', locale=locale, lang_js=locale_js, lang=lang,
+                           startup_done=config['MISC'].getboolean('setup_done'))
 
 
 @app.route('/options/server')
 def options_server():
-    return render_template('options/options-server.html', server_address=config['SERVER'].get('host'),
+    return render_template('options/options-server.html', locale=locale, lang_js=locale_js, lang=lang,
+                           server_address=config['SERVER'].get('host'),
                            server_port=config['SERVER'].getint('port'),
                            server_debug=config['SERVER'].getboolean('debug'))
 
 
 @app.route('/options/photos')
 def options_photos():
-    return render_template('options/options-photos.html',
+    return render_template('options/options-photos.html', locale=locale, lang=lang, lang_js=locale_js,
                            photos_folder=os.path.abspath(config['PHOTO'].get('upload_folder').replace('/', '\\')),
                            index_database_timeout=database_index_timeout,
                            index_upload_folder_timeout=upload_folder_index_timeout
@@ -515,19 +521,24 @@ def options_photos():
 
 @app.route('/options/other')
 def options_other():
-    return render_template('options/options-other.html', startup_done=config['MISC'].getboolean('setup_done'))
+    return render_template('options/options-other.html', locale=locale, lang=lang, lang_js=locale_js, locales=locales,
+                           startup_done=config['MISC'].getboolean('setup_done'))
 
 
 @app.route('/options/set', methods=['POST'])
 def set_option():
     global database_index_timeout
     global upload_folder_index_timeout
+    global lang
+    global locale
+    global APP_CRASH
 
     if request.method == 'POST':
         ip = request.form.get('ip')
         port = request.form.get('port')
         debug = request.form.get('debug')
         photos_folder = request.form.get('photos_folder')
+        language = request.form.get('language')
         setup_done = request.form.get('setup_done')
         upload_folder_index_timeout_val = request.form.get('index_upload_folder_timeout')
         database_index_timeout_val = request.form.get('index_database_timeout')
@@ -541,9 +552,9 @@ def set_option():
                     'host': ip
                 })
                 save_config()
-                return 'Изменения вступят в силу после перезапуска сервера'
+                return lang['server_answer_reload_to_continue']
             else:
-                return 'Упс! Кажется, это не IP-адрес.'
+                return f'{lang["server_answer_oops_it_seems_not"]} {lang["options_server_host_headline"].lower()}'
 
         elif port:
             if port.isdigit():
@@ -552,10 +563,10 @@ def set_option():
                 })
                 save_config()
 
-                return 'Изменения вступят в силу после перезапуска сервера'
+                return lang['server_answer_reload_to_continue']
 
             else:
-                return 'Упс! Кажется, это не порт.'
+                return f'{lang["server_answer_oops_it_seems_not"]} {lang["options_server_port_headline"].lower()}'
 
         elif debug:
             config['SERVER'].update({
@@ -570,9 +581,9 @@ def set_option():
             if not os.path.exists(path):
                 os.makedirs(path)
             elif not os.path.isdir(path):
-                return 'Данный путь - не папка'
+                return lang['server_answer_not_folder']
             elif path.split(':')[0].lower() != os.path.abspath(app.config['UPLOAD_FOLDER']).split(':')[0].lower():
-                return 'Папка с фотографиями должна находиться на одном логическом диске с приложением'
+                return lang['server_answer_folder_drive']
 
             rel_path = os.path.relpath(path).replace('\\', '/')
             config['PHOTO'].update({
@@ -580,7 +591,7 @@ def set_option():
             })
             save_config()
 
-            return 'Перезапустите сервер, чтобы изменения вступили в силу'
+            return lang['server_answer_reload_to_continue']
 
         elif setup_done:
             config['MISC'].update({
@@ -590,15 +601,30 @@ def set_option():
 
             return ''
 
+        elif language:
+            fmt_lang = language.strip().lower()
+            if fmt_lang in locales:
+                config['MISC'].update({
+                    'language': fmt_lang
+                })
+                save_config()
+                lang, lang_js, APP_CRASH = load_locale(fmt_lang)
+                locale = fmt_lang
+
+                return ''
+
+            else:
+                return lang['server_answer_incorrect_value']
+
         elif database_index_timeout_val:
             try:
                 timeout = int(database_index_timeout_val)
             except ValueError:
-                return 'Некорректное значение!'
+                return lang['server_answer_incorrect_value']
 
             config['PHOTO'].update({
-                    'database_index_timeout': str(timeout)
-                })
+                'database_index_timeout': str(timeout)
+            })
             save_config()
             database_index_timeout = timeout
             return ''
@@ -607,19 +633,19 @@ def set_option():
             try:
                 timeout = int(upload_folder_index_timeout_val)
             except ValueError:
-                return 'Некорректное значение!'
+                return lang['server_answer_incorrect_value']
 
             config['PHOTO'].update({
-                    'upload_folder_index_timeout': str(timeout)
-                })
+                'upload_folder_index_timeout': str(timeout)
+            })
             save_config()
             upload_folder_index_timeout = timeout
             return ''
 
         elif index_all:
             create_database_if_absent()
-            indexUploadFolder()
-            indexDatabase()
+            index_upload_folder()
+            index_database()
             delete_duplicates()
             return ''
 
@@ -628,9 +654,13 @@ def set_option():
 
 
 if __name__ == '__main__':
-    print(config['SERVER'].get('host'))
-    app.run(
-        host=config['SERVER'].get('host'),
-        port=config['SERVER'].getint('port'),
-        debug=config['SERVER'].getboolean('debug')
-    )
+    if not APP_CRASH:
+        print(f"Server running on {config['SERVER'].get('host')}:{config['SERVER'].getint('port')}")
+        app.run(
+            host=config['SERVER'].get('host'),
+            port=config['SERVER'].getint('port'),
+            debug=config['SERVER'].getboolean('debug')
+        )
+    else:
+        print('An error occurred. Stopping..')
+        input()

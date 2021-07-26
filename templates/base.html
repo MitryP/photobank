@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="{{ locale }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block generalTitle %}{% endblock %} - ФотоБанк</title>
+    <title>{% block generalTitle %}{% endblock %} - {{ lang['project_title_localized'] }}</title>
 <!--    <link rel="stylesheet" href="css/styles.css">-->
     <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -22,7 +22,7 @@
     <div class="search-panel">
         <div class="container">
             <form action="/search" method="post">
-                <input name="search" type="search" placeholder="Искать фото.." value="{{ date if date else '' }}" autocomplete="no" required>
+                <input name="search" type="search" placeholder="{{ lang['search_input_placeholder'] }}" value="{{ date if date else '' }}" autocomplete="no" required>
                 <button type="submit">></button>
             </form>
         </div>
@@ -32,12 +32,12 @@
             <ul class="menu">
                 <a href="/new">
                 <li class="menu-li">
-                    Загрузить фото
+                    {{ lang['menu_button_upload'] }}
                 </li>
                 </a>
                 <a href="/options">
                 <li class="menu-li">
-                    Настройки
+                    {{ lang['menu_button_options'] }}
                 </li>
                 </a>
             </ul>
@@ -60,18 +60,19 @@
             <div class="popup-buttons-container">
                 {% if serverMessage['href'] %}
                     <button class="popup-button ok" onclick="location.href = '{{ serverMessage['href'] }}'">
-                        Перейти
+                        {{ lang['popup_button_ok'] }}
                     </button>
                 {% endif %}
                 
                 <button class="popup-button cancel" onclick="hidePopup()">
-                    Отложить
+                    {{ lang['popup_button_cancel'] }}
                 </button>
             </div>
         </div>
     </div>
     {% endif %}
  
-    <script src="{{url_for('static', filename='js/scripts.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <script src="{{ url_for('static', filename=lang_js) }}"></script>
 </body>
 </html>

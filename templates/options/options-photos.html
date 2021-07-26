@@ -1,7 +1,7 @@
 {% extends "options-base.html" %}
 
 {% block optionsSectionName %}
-	/ Фотографии
+	/ {{ lang['options_photos_label'] }}
 {% endblock %}
 
 {% block optionsList %}
@@ -10,10 +10,10 @@
 	<li class="options-li">
 		<div class="li-container">
 			<h4 class="li-headline">
-				Путь к папке с фотографиями
+				{{ lang['options_photos_path_headline'] }}
 			</h4>
 			<p class="li-caption">
-				<span class="important">{{ photos_folder }}</span>
+				{{ lang['options_photos_path_description'] }}<span class="important">{{ photos_folder }}</span>
 			</p>
 		</div>
 		
@@ -24,10 +24,10 @@
 	<li class="options-li">
 		<div class="li-container">
 			<h4 class="li-headline">
-				Таймаут проверки базы данных
+				{{ lang['options_photos_database_check_timeout_headline'] }}
 			</h4>
 			<p class="li-caption">
-				Время между полными проверками: <span class="important">{{ index_database_timeout if index_database_timeout else '-'}} секунд</span>. <span class="important">Осторожно, чем больше фото, тем дольше!</span>
+				{{ lang['options_photos_database_check_timeout_description'] }} <span class="important">{{ index_database_timeout if index_database_timeout else '-'}} {{ lang['options_seconds'] }}</span>. <span class="important">{{ lang['options_photos_database_check_timeout_description_warning'] }}</span>
 			</p>
 		</div>
 	</li>
@@ -37,10 +37,10 @@
 	<li class="options-li">
 		<div class="li-container">
 			<h4 class="li-headline">
-				Таймаут проверки папки с фотографиями
+				{{ lang['options_photos_folder_check_timeout_headline'] }}
 			</h4>
 			<p class="li-caption">
-				Время между поиском новых фото в папке: <span class="important">{{ index_upload_folder_timeout if index_upload_folder_timeout else '-'}} секунд</span>. Занимает 1-10 секунд в зависимости от количества фото
+				{{ lang['options_photos_folder_check_timeout_description'] }} <span class="important">{{ index_upload_folder_timeout if index_upload_folder_timeout else '-'}} {{ lang['options_seconds'] }}</span>. {{ lang['options_photos_folder_check_timeout_description_warning'] }}
 			</p>
 		</div>	
 	</li>
@@ -50,10 +50,10 @@
 	<li class="options-li">
 		<div class="li-container">
 			<h4 class="li-headline">
-				Проиндексировать вручную
+				{{ lang['options_photos_manual_indexing_headline'] }}
 			</h4>
 			<p class="li-caption">
-				Запустить проверку базы и папки с фото вручную
+				{{ lang['options_photos_manual_indexing_description'] }}
 			</p>
 		</div>	
 	</li>

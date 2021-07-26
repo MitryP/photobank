@@ -1,21 +1,34 @@
 {% extends "options-base.html" %}
 
 {% block optionsSectionName %}
-	/ Другое
+	/ {{ lang['options_misc_label'] }}
 {% endblock %}
 
 {% block optionsList %}
-	
+
+	<a href="" onclick="setLanguage()" class="options-link">
+		<li class="options-li">
+			<div class="li-container">
+				<h4 class="li-headline">
+					{{ lang['options_misc_language_headline'] }}
+				</h4>
+				<p class="li-caption">
+					{{ lang['options_misc_language_selected_language'] }} <span class="important">{{ locale }}</span>. {{ lang['options_misc_language_available_languages'] }} <span class="important">{{ ', '.join(locales) }}</span>
+				</p>
+			</div>
+		</li>
+	</a>
+
 	{% if not startup_done %}
 		
 		<a href="" onclick="setupDone()" class="options-link ready">
 			<li class="options-li">
 				<div class="li-container">
 					<h4 class="li-headline">
-						Завершить настройку
+						{{ lang['options_misc_setup_done_headline'] }}
 					</h4>
 					<p class="li-caption">
-						Больше не показывать предложение настроить сервис на главной странице
+						{{ lang['options_misc_setup_done_description'] }}
 					</p>
 				</div>
 			</li>

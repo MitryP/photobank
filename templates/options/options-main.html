@@ -6,10 +6,10 @@
 	<li class="options-li">
 		<div class="li-container">
 			<h4 class="li-headline">
-				Сервер
+				{{ lang['options_server_label'] }}
 			</h4>
 			<p class="li-caption">
-				IP, порт, отладка
+				{{ lang['options_base_server_description'] }}
 			</p>
 		</div>
 		
@@ -20,29 +20,27 @@
 	<li class="options-li">
 		<div class="li-container">
 			<h4 class="li-headline">
-				Фотографии
+				{{ lang['options_photos_label'] }}
 			</h4>
 			<p class="li-caption">
-				Папка для фото, время проверки базы и папки с фото
+				{{ lang['options_base_photos_description'] }}
 			</p>
 		</div>
 	</li>
 </a>
 
-{% if not startup_done %}
 <a href="options/other" class="options-link">
 	<li class="options-li">
 		<div class="li-container">
 			<h4 class="li-headline">
-				Другое
+				{{ lang['options_misc_label'] }}
 			</h4>
 			<p class="li-caption">
-				Завершить настройку
+				{{ lang['options_base_misc_description'] }}
 			</p>
 		</div>
 	</li>
 </a>
-{% endif %}
 
 {% endblock %}
 

@@ -1,7 +1,7 @@
 {% extends "options-base.html" %}
 
 {% block optionsSectionName %}
-	/ Сервер
+	/ {{ lang['options_server_label'] }}
 {% endblock %}
 
 {% block optionsList %}
@@ -10,10 +10,10 @@
 	<li class="options-li">
 		<div class="li-container">
 			<h4 class="li-headline">
-				IP адрес
+				{{ lang['options_server_host_headline'] }}
 			</h4>
 			<p class="li-caption">
-				Адрес сервера в локальной сети: <span class="important">{{ server_address }}</span>
+				{{ lang['options_server_host_description'] }} <span class="important">{{ server_address }}</span>
 			</p>
 		</div>
 		
@@ -24,10 +24,10 @@
 	<li class="options-li">
 		<div class="li-container">
 			<h4 class="li-headline">
-				Порт
+				{{ lang['options_server_port_headline'] }}
 			</h4>
 			<p class="li-caption">
-				Сервер использует порт <span class="important">{{ server_port }}</span>
+				{{ lang['options_server_port_description'] }} <span class="important">{{ server_port }}</span>
 			</p>
 		</div>
 		
@@ -38,10 +38,10 @@
 	<li class="options-li">
 		<div class="li-container">
 			<h4 class="li-headline">
-				Отладка
+				{{ lang['options_server_debug_headline'] }}
 			</h4>
 			<p class="li-caption">
-				Вывод ошибок <span class="important">{{ 'включен' if server_debug else 'отключен' }}</span>
+				{{ lang['options_server_debug_description'] }} <span class="important">{{ lang['options_enabled'] if server_debug else lang['options_disabled'] }}</span>
 			</p>
 		</div>
 		

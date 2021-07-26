@@ -1,0 +1,59 @@
+{
+  "project_title_localized": "ФотоБанк",
+  "display_title": "Просмотр",
+  "home_title": "Главная",
+
+  "startup_greeting": "Привет! Настрой меня ;)",
+  "startup_explanation": "Перейди в настройки, чтобы установить папку для индексации и загрузки фотографий, а также IP и порт сервера",
+  "popup_button_ok": "Перейти",
+  "popup_button_cancel": "Отложить",
+
+  "search_input_placeholder": "Искать фото..",
+
+  "menu_button_upload": "Загрузить фото",
+  "menu_button_options": "Настройки",
+
+  "upload_page_title": "Загрузка фото",
+  "upload_label": "Загрузить фото",
+  "upload_button": "Отправить",
+
+  "options_label": "Настройки",
+  "options_server_label": "Сервер",
+  "options_base_server_description": "IP, порт, отладка",
+  "options_server_host_headline": "IP-адрес",
+  "options_server_host_description": "Адрес сервера в локальной сети:",
+  "options_server_port_headline": "Порт",
+  "options_server_port_description": "Сервер использует порт",
+  "options_server_debug_headline": "Отладка",
+  "options_server_debug_description": "Детальный вывод ошибок",
+  "options_enabled": "включен",
+  "options_disabled": "отключен",
+
+  "options_photos_label": "Фотографии",
+  "options_base_photos_description": "Папка для фото, время проверки базы и папки загрузки",
+  "options_photos_path_headline": "Путь к папке с фотографиями",
+  "options_photos_path_description": "",
+  "options_photos_database_check_timeout_headline": "Таймаут проверки базы данных",
+  "options_photos_database_check_timeout_description": "Время между полными проверками:",
+  "options_photos_database_check_timeout_description_warning": "Осторожно, чем больше фото, тем дольше!",
+  "options_photos_folder_check_timeout_headline": "Таймаут проверки папки с фотографиями",
+  "options_photos_folder_check_timeout_description": "Время между поиском новых фото в папке:",
+  "options_photos_folder_check_timeout_description_warning": "Занимает 1-10 секунд в зависимости от количества фото",
+  "options_seconds": "секунд",
+  "options_photos_manual_indexing_headline": "Проиндексировать вручную",
+  "options_photos_manual_indexing_description": "Запустить проверку базы и папки с фото вручную",
+
+  "options_misc_label": "Другое",
+  "options_base_misc_description": "Язык, завершить настроку",
+  "options_misc_setup_done_headline": "Завершить настройку",
+  "options_misc_setup_done_description": "Больше не показывать предложение настроить сервис на главной странице",
+  "options_misc_language_headline": "Язык (применяетя везде после перезагрузки сервера)",
+  "options_misc_language_selected_language": "Выбранный язык:",
+  "options_misc_language_available_languages": "Доступные языки:",
+
+  "server_answer_incorrect_value": "Некорректное значение!",
+  "server_answer_reload_to_continue": "Перезапустите сервер, чтобы изменения вступили в силу",
+  "server_answer_not_folder": "Данный путь не является папкой",
+  "server_answer_folder_drive": "Папка с фотографиями должна находиться на одном логическом диске с приложением",
+  "server_answer_oops_it_seems_not": "Упс! Кажется, это не"
+}

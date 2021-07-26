@@ -1,17 +1,16 @@
 {% extends 'base.html' %}
 
 {% block generalTitle %}
-Главная
+	{{ lang['upload_page_title'] }}
 {% endblock %}
 
 {% block content %}
 <div class="main-container">
 	<main class="holder upload">
-	    <!-- <h2>Загрузить фото</h2> -->
 	    <form enctype="multipart/form-data" method="post" class="upload">
 	        <input type="file" accept="image/*" id="file" name="file" placeholder="file test" required multiple>
-	        <label for="file">Загрузить фото</label>
-	        <button type="submit">Отправить</button>
+	        <label for="file">{{ lang['upload_label'] }}</label>
+	        <button type="submit">{{ lang['upload_button'] }}</button>
 	    </form>
     </main>
 </div>

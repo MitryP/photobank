@@ -159,68 +159,31 @@ function applyOption(optionName, value) {
 	console.log(FD);
 
 	XHR.addEventListener('load', function (event) {
-		if (event.target.responseText.length > 0) {
-			alert(event.target.responseText)
-
-		}
+        if (event.target.responseText.length > 0) {
+            alert(event.target.responseText)
+        }
+        document.location.reload()
 	})
 	XHR.addEventListener('error', function () {
-		alert('Сервер не ответил')
+		alert('An error occurred')
 	})
 
 	XHR.open('POST', '/options/set');
 	XHR.send(FD);
 }
 
-function setIP() {
-	ip = prompt('Введите новый ip', document.querySelectorAll('span.important')[0].innerHTML);
-	if (ip) {
-		applyOption('ip', ip);
-		
-	}
-
-}
-
-function setPort() {
-	port = prompt('Введите новый порт', document.querySelectorAll('span.important')[1].innerHTML)
-	if (port) {
-		applyOption('port', port)	
-	}
-}
-
 function toggleDebug() {
 	applyOption('debug', '1')
-}
-
-function setPhotosFolder() {
-	path = prompt('Введите новый абсолютный путь к папке с фотографиями на сервере:', document.querySelectorAll('span.important')[0].innerHTML)
-	if (path) {
-		applyOption('photos_folder', path)
-
-	}
 }
 
 function setupDone() {
 	applyOption('setup_done', '1')
 }
 
-function setDatabaseIndexTimeout() {
-	timeout = prompt('Введите новую задержку (в секундах):');
-	if (timeout) {
-		applyOption('index_database_timeout', timeout)
-	}
-}
-
-function setUploadFolderIndexTimeout() {
-	timeout = prompt('Введите новую задержку (в секундах):');
-	if (timeout) {
-		applyOption('index_upload_folder_timeout', timeout)
-	}
-}
-
 function indexDatabaseAndUploadFolder() {
 	applyOption('index_all', '1')
 }
+
 
 let fileInput = document.querySelector('#file');
 let label = fileInput.nextElementSibling;
