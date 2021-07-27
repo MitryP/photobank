@@ -4,8 +4,8 @@
 """This module allows to extract valid date from user input.
 Datify can identify separate parts of dates, e.g. '2021', 'july', '6th'.
 Also, module functions can be used to identify separate parts of date through class' static methods:
-is_day(day), is_year(year), is_digit_month(month) for digit representation of month, and is_alpha_month(month) for alphabethic
-representation of month.
+is_day(day), is_year(year), is_digit_month(month) for digit representation of month, and is_alpha_month(month) for
+alphabetic representation of month.
 User input is processed through class 'Datify'. Code  `Datify(string).date()`  will return datetime object if all
 parameters were given in the string. Otherwise it will raise TypeError. To get tuple of all available fields from
 string use  `Datify(string).tuple()` To get datetime object or tuple if datetime is unable to be created use

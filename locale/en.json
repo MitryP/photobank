@@ -47,7 +47,7 @@
   "options_base_misc_description": "Language, disable startup notification",
   "options_misc_setup_done_headline": "Startup done",
   "options_misc_setup_done_description": "Don't show startup offer at the main page",
-  "options_misc_language_headline": "Language (fully applies after server restart)",
+  "options_misc_language_headline": "Language (applies after page reload)",
   "options_misc_language_selected_language": "Selected language:",
   "options_misc_language_available_languages": "Available localizations:",
 
@@ -55,5 +55,11 @@
   "server_answer_reload_to_continue": "Restart server to apply changes",
   "server_answer_not_folder": "Given path is not a folder",
   "server_answer_folder_drive": "A photos folder must be on the same logic disk with the app",
-  "server_answer_oops_it_seems_not": "Oops! It doesn't come across as"
+  "server_answer_oops_it_seems_not": "Oops! It doesn't come across as",
+
+  "js_new_ip": "Enter new ip",
+  "js_new_port": "Enter new port",
+  "js_new_folder_path": "Enter new absolute path to the photos folder on the server",
+  "js_new_language": "Select the required localization from the given",
+  "js_new_timeout": "Enter new timeout (in seconds)"
 }

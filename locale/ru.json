@@ -47,7 +47,7 @@
   "options_base_misc_description": "Язык, завершить настроку",
   "options_misc_setup_done_headline": "Завершить настройку",
   "options_misc_setup_done_description": "Больше не показывать предложение настроить сервис на главной странице",
-  "options_misc_language_headline": "Язык (применяетя везде после перезагрузки сервера)",
+  "options_misc_language_headline": "Язык (применяетя после перезагрузки страницы)",
   "options_misc_language_selected_language": "Выбранный язык:",
   "options_misc_language_available_languages": "Доступные языки:",
 
@@ -55,5 +55,11 @@
   "server_answer_reload_to_continue": "Перезапустите сервер, чтобы изменения вступили в силу",
   "server_answer_not_folder": "Данный путь не является папкой",
   "server_answer_folder_drive": "Папка с фотографиями должна находиться на одном логическом диске с приложением",
-  "server_answer_oops_it_seems_not": "Упс! Кажется, это не"
+  "server_answer_oops_it_seems_not": "Упс! Кажется, это не",
+
+  "js_new_ip": "Введите новый ip",
+  "js_new_port": "Введите новый порт",
+  "js_new_folder_path": "Введите новый абсолютный путь к папке с фотографиями на сервере",
+  "js_new_language": "Укажите необходимую локализацию из указанных",
+  "js_new_timeout": "Введите новую задержку (в секундах)"
 }

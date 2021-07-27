@@ -159,10 +159,21 @@ function applyOption(optionName, value) {
 	console.log(FD);
 
 	XHR.addEventListener('load', function (event) {
-        if (event.target.responseText.length > 0) {
-            alert(event.target.responseText)
+//	    event.preventDefault()
+	    if (event.target.responseText == '$reload') {
+	        document.location.reload()
+	    }
+	    else {
+            if (~event.target.responseText.indexOf('$redirect;')) {
+                loc = event.target.responseText.split(';')[1]
+//                location.href = loc
+            }
+            else {
+                if (event.target.responseText.length > 0) {
+                    alert(event.target.responseText)
+                }
+            }
         }
-        document.location.reload()
 	})
 	XHR.addEventListener('error', function () {
 		alert('An error occurred')

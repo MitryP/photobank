@@ -1,9 +1,9 @@
 from datetime import datetime
-import configparser
 import functools
 import time
-import json
 # from typing import Optional
+from modules.config import config, save_config
+from modules.localization import locale, locales, load_locale
 
 import exifread
 import os
@@ -13,37 +13,9 @@ from flask import Flask, render_template, request, redirect, url_for, send_file
 from werkzeug.datastructures import FileStorage
 from flask_sqlalchemy import SQLAlchemy
 
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-APP_CRASH = False
-
-
-def save_config():
-    with open('config.ini', 'w') as configfile:
-        config.write(configfile)
-
-
-config = configparser.ConfigParser()
-if not os.path.exists('config.ini'):
-    print('Creating config.ini..')
-    config['SERVER'] = {
-        'host': '127.0.0.1',
-        'port': 5500,
-        'debug': 'no'
-    }
-    config['PHOTO'] = {
-        'upload_folder': 'photos',
-        'database_index_timeout': 1800,
-        'upload_folder_index_timeout': 300
-    }
-    config['MISC'] = {
-        'language': 'en',
-        'setup_done': 'no',
-    }
-    save_config()
-
-else:
-    config.read('config.ini')
 
 app.config['UPLOAD_FOLDER'] = (config['PHOTO'].get('upload_folder'))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///photos.db'
@@ -59,29 +31,9 @@ upload_folder_index_timeout = config['PHOTO'].getint('upload_folder_index_timeou
 LAST_DATABASE_INDEX = None
 LAST_FOLDER_INDEX = None
 
-locales = [name.split('.')[0] for name in os.listdir('locale')]
-locales_js = [name.split('.')[0] for name in os.listdir('static/js')]
-locale = config['MISC'].get('language') if len(config['MISC'].get('language')) == 2 else 'en'
 
-
-def load_locale(lang_name: str):
-    lang: dict = {}
-    locale_js = f"js/{lang_name if lang_name in locales_js else 'en'}.js"
-    APP_CRASH = False
-
-    print(locale_js)
-
-    try:
-        with open(f'locale/{lang_name}.json', encoding='utf-8') as f:
-            lang = json.load(f)
-    except TypeError:
-        print('Localisation not found!')
-        APP_CRASH = True
-
-    return lang, locale_js, APP_CRASH
-
-
-lang, locale_js, APP_CRASH = load_locale(locale)
+locale = locale
+lang, APP_CRASH = load_locale(locale)
 
 
 def view_function_timer(prefix='', writeto=print):
@@ -290,7 +242,7 @@ def index():
         server_message['paragraph'] = lang['startup_explanation']
         server_message['href'] = '/options'
 
-    return render_template('home.html', locale=locale, lang=lang, lang_js=locale_js, dates_dict=records,
+    return render_template('home.html', locale=locale, lang=lang, dates_dict=records,
                            serverMessage=server_message)
 
 
@@ -439,7 +391,7 @@ def upload():
             return 'An error occurred during adding new photo'
 
     else:
-        return render_template('upload.html', locale=locale, lang_js=locale_js, lang=lang)
+        return render_template('upload.html', locale=locale, lang=lang)
 
 
 @app.route('/get/<path:path>')
@@ -493,18 +445,18 @@ def photos_by_date(date: str):
     records = records.order_by(Photo.date.desc()).all()
     result = get_dates_dict(records)
 
-    return render_template('imagesfromdate.html', locale=locale, lang_js=locale_js, lang=lang, date=date, records=result)
+    return render_template('imagesfromdate.html', locale=locale, lang=lang, date=date, records=result)
 
 
 @app.route('/options')
 def options():
-    return render_template('options/options-main.html', locale=locale, lang_js=locale_js, lang=lang,
+    return render_template('options/options-main.html', locale=locale,  lang=lang,
                            startup_done=config['MISC'].getboolean('setup_done'))
 
 
 @app.route('/options/server')
 def options_server():
-    return render_template('options/options-server.html', locale=locale, lang_js=locale_js, lang=lang,
+    return render_template('options/options-server.html', locale=locale, lang=lang,
                            server_address=config['SERVER'].get('host'),
                            server_port=config['SERVER'].getint('port'),
                            server_debug=config['SERVER'].getboolean('debug'))
@@ -512,7 +464,7 @@ def options_server():
 
 @app.route('/options/photos')
 def options_photos():
-    return render_template('options/options-photos.html', locale=locale, lang=lang, lang_js=locale_js,
+    return render_template('options/options-photos.html', locale=locale, lang=lang,
                            photos_folder=os.path.abspath(config['PHOTO'].get('upload_folder').replace('/', '\\')),
                            index_database_timeout=database_index_timeout,
                            index_upload_folder_timeout=upload_folder_index_timeout
@@ -521,7 +473,7 @@ def options_photos():
 
 @app.route('/options/other')
 def options_other():
-    return render_template('options/options-other.html', locale=locale, lang=lang, lang_js=locale_js, locales=locales,
+    return render_template('options/options-other.html', locale=locale, lang=lang,  locales=locales,
                            startup_done=config['MISC'].getboolean('setup_done'))
 
 
@@ -608,10 +560,10 @@ def set_option():
                     'language': fmt_lang
                 })
                 save_config()
-                lang, lang_js, APP_CRASH = load_locale(fmt_lang)
+                lang, APP_CRASH = load_locale(fmt_lang)
                 locale = fmt_lang
 
-                return ''
+                return '$redirect;/options'
 
             else:
                 return lang['server_answer_incorrect_value']
