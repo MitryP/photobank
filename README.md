@@ -16,7 +16,8 @@ The service is fully autonomous and doesn't need any Internet connection, all re
 #### Requirements
 To run the service, you will need Python 3.
 There are some external libraries needed for service functioning: `flask`, `flask-sqlalchemy`, `Pillow` and `exifread`. Also, it needs `datify`, but as it's my own library, I included it in the project files.
-> You can freely install all of these through `pip` with `pip install` command. 
+> You can freely install all of these through `pip` with this command:
+> `pip install flask flask-sqlalchemy Pillow exifread` 
 
 #### Instalation
 Just download source from the project's GitHub page and unpack the archive into any folder **on the same drive, where you want to store your photos**. Also, if you was storing your photos in folders, service will automatically add these photos to database and create thumbnails for them.
