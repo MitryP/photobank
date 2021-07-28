@@ -4,10 +4,10 @@ import time
 # from typing import Optional
 from modules.config import config, save_config
 from modules.localization import locale, locales, load_locale
+from modules.datify import Datify
 
 import exifread
 import os
-from datify import Datify
 from PIL import Image
 from flask import Flask, render_template, request, redirect, url_for, send_file
 from werkzeug.datastructures import FileStorage
