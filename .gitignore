@@ -2,6 +2,7 @@
 /.idea
 /venv
 /photos
+/static/less
 
 *.ini
 *.db
