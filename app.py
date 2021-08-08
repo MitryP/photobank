@@ -34,15 +34,15 @@ LAST_FOLDER_INDEX = None
 
 def format_date(date_str: str):
     date_parts = date_str.split(' ')
-    print(date_parts)
     formatted = ''
+
     for part in date_parts:
         print(part)
         if Datify.is_alpha_month(part):
             part = month_names[str(Datify.get_alpha_month(part))]
 
         formatted = ', '.join([formatted, str(part)])
-    print(formatted)
+
     return formatted[2:]
 
 
