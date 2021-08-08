@@ -61,5 +61,20 @@
   "js_new_port": "Enter new port",
   "js_new_folder_path": "Enter new absolute path to the photos folder on the server",
   "js_new_language": "Select the required localization from the given",
-  "js_new_timeout": "Enter new timeout (in seconds)"
+  "js_new_timeout": "Enter new timeout (in seconds)",
+
+  "months": {
+    "1": "January",
+    "2": "February",
+    "3": "March",
+    "4": "April",
+    "5": "May",
+    "6": "June",
+    "7": "July",
+    "8": "August",
+    "9": "September",
+    "10": "October",
+    "11": "November",
+    "12": "December"
+  }
 }

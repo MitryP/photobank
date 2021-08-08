@@ -32,8 +32,22 @@ LAST_DATABASE_INDEX = None
 LAST_FOLDER_INDEX = None
 
 
+def format_date(date_str: str):
+    date_parts = date_str.split(' ')
+    print(date_parts)
+    formatted = ''
+    for part in date_parts:
+        print(part)
+        if Datify.is_alpha_month(part):
+            part = month_names[str(Datify.get_alpha_month(part))]
+
+        formatted = ', '.join([formatted, str(part)])
+    print(formatted)
+    return formatted[2:]
+
+
 locale = locale
-lang, APP_CRASH = load_locale(locale)
+lang, month_names, APP_CRASH = load_locale(locale)
 
 
 def view_function_timer(prefix='', writeto=print):
@@ -211,7 +225,8 @@ def setup():
 def get_dates_dict(records):
     dates = dict()
     for record in records:
-        date = record.date.strftime('%d %B, %Y')
+        date = record.date.strftime('%d %B %Y')
+        date = format_date(date)
         try:
             dates[date]
 
@@ -483,6 +498,7 @@ def set_option():
     global upload_folder_index_timeout
     global lang
     global locale
+    global month_names
     global APP_CRASH
 
     if request.method == 'POST':
@@ -560,7 +576,7 @@ def set_option():
                     'language': fmt_lang
                 })
                 save_config()
-                lang, APP_CRASH = load_locale(fmt_lang)
+                lang, month_names, APP_CRASH = load_locale(fmt_lang)
                 locale = fmt_lang
 
                 return '$redirect;/options'
