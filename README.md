@@ -1,5 +1,5 @@
 # PhotoBank
-A standalone web-servce on flask development server to sort and share your photos through the local network.
+A standalone web-servce on flask development server to sort and share your photos through the local network with UI adapted for any devices.
 
 ![Homepage](_images/homepage.jpg)
 
