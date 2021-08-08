@@ -36,5 +36,5 @@ After the first setting the server up, you can run it just the same way. You can
 Open service's homepage and go Menu>Upload photos. Press 'Upload photos' button and select photos you want to upload to your server. Be careful: if you have slow wifi connection, translation of large amounts of hi-res photos can take extremely long time. During the upload you mustn't close the page. (In further updates I will change the way of uploading photos to prevent loosing all the progress in that cases)
 
 ##### What will happen with my photos?
-After uploading they will be saved into your photos folder, separeted into folders named in format *YYYYMMDD*. A low-res thumbnail will be created or every uploaded photo and they will be added to the database. Then you will be redirected to the main page, where you will see the uploaded photos.
+After uploading they will be saved into your photos folder, separated into folders named in format *YYYYMMDD*. A low-res thumbnail will be created or every uploaded photo and they will be added to the database. Then you will be redirected to the main page, where you will see the uploaded photos.
 
