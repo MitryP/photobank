@@ -37,7 +37,7 @@ def format_date(date_str: str):
     formatted = ''
 
     for part in date_parts:
-        print(part)
+        # print(part)
         if Datify.is_alpha_month(part):
             part = month_names[str(Datify.get_alpha_month(part))]
 
@@ -247,11 +247,6 @@ def index():
     records = get_dates_dict(records)
 
     server_message = {}
-    # if not config['MISC'].getboolean('setup_done'):
-    #     server_message['headline'] = 'Привет! Настрой меня ;)'
-    #     server_message['paragraph'] = 'Перейди в настройки, чтобы установить папку для индексации и загрузки ' \
-    #                                   'фотографий, а также IP и порт сервера '
-    #     server_message['href'] = '/options'
     if not config['MISC'].getboolean('setup_done'):
         server_message['headline'] = lang['startup_greeting']
         server_message['paragraph'] = lang['startup_explanation']

@@ -465,6 +465,17 @@ header.main-header nav span.menu-button.active {
 .photo-view span.button.hidden {
   display: none;
 }
+.photo-view span.pointer {
+  color: white;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  font-size: 1.1em;
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+}
+.photo-view span.pointer.invisible {
+  display: none;
+}
 @media screen and (orientation: portrait) and (max-width: 768px) {
   .photo-view span.button {
     top: calc(44vh);
@@ -474,6 +485,9 @@ header.main-header nav span.menu-button.active {
   }
   .photo-view span.button.next {
     right: 15px;
+  }
+  .photo-view span.pointer {
+    display: none;
   }
 }
 .photo-view span.button.previous {
