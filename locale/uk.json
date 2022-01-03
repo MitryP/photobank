@@ -1,0 +1,80 @@
+{
+  "project_title_localized": "ФотоБанк",
+  "display_title": "Перегляд",
+  "home_title": "Головна",
+
+  "startup_greeting": "Привіт! Налаштуй мене ;)",
+  "startup_explanation": "Перейди до налаштувань, щоб установити папку для індексації та завантаження фотографій, а також IP і порт сервера.",
+  "popup_button_ok": "Перейти",
+  "popup_button_cancel": "Відкласти",
+
+  "search_input_placeholder": "Шукати фото..",
+
+  "menu_button_upload": "Завантажити фото",
+  "menu_button_options": "Налаштування",
+
+  "upload_page_title": "Завантаження фото",
+  "upload_label": "Завантажити фото",
+  "upload_button": "Надіслати",
+
+  "options_label": "Налаштування",
+  "options_server_label": "Сервер",
+  "options_base_server_description": "IP, порт, дебаг",
+  "options_server_host_headline": "IP-адреса",
+  "options_server_host_description": "Адреса сервера в локальній мережі:",
+  "options_server_port_headline": "Порт",
+  "options_server_port_description": "Сервер використовує порт",
+  "options_server_debug_headline": "Дебаг",
+  "options_server_debug_description": "Детальне виведення помилок у консоль",
+  "options_enabled": "увімкнено",
+  "options_disabled": "вимкнено",
+
+  "options_photos_label": "Фотографії",
+  "options_base_photos_description": "Папка для фото, час перевірки бази та папки завантаження",
+  "options_photos_path_headline": "Шлях до папки з фотографіями",
+  "options_photos_path_description": "",
+  "options_photos_database_check_timeout_headline": "Таймаут перевірки бази даних",
+  "options_photos_database_check_timeout_description": "Час між повними перевірками:",
+  "options_photos_database_check_timeout_description_warning": "Обережно, що більше фотографій, тим довше!",
+  "options_photos_folder_check_timeout_headline": "Таймаут перевірки папки з фотографіями",
+  "options_photos_folder_check_timeout_description": "Час між пошуком нових фото в папці:",
+  "options_photos_folder_check_timeout_description_warning": "Займає 1-10 секунд залежно від кількості фото",
+  "options_seconds": "секунд",
+  "options_photos_manual_indexing_headline": "Проіндексувати вручну",
+  "options_photos_manual_indexing_description": "Запустити перевірку бази та папки з фото вручну",
+
+  "options_misc_label": "Інше",
+  "options_base_misc_description": "Мова, завершити налаштування",
+  "options_misc_setup_done_headline": "Завершити налаштування",
+  "options_misc_setup_done_description": "Більше не показувати пропозицію налаштувати сервіс на головній сторінці",
+  "options_misc_language_headline": "Мова (застосовується після перезавантаження сторінки)",
+  "options_misc_language_selected_language": "Обрана мова:",
+  "options_misc_language_available_languages": "Доступні локалізації:",
+
+  "server_answer_incorrect_value": "Некоректне значення!",
+  "server_answer_reload_to_continue": "Перезвантажте сервер, щоб застосувати зміни",
+  "server_answer_not_folder": "Даний шлях не є папкою",
+  "server_answer_folder_drive": "Папка с фотографіями має знаходитися на одному логичному диску із застосунком",
+  "server_answer_oops_it_seems_not": "Упс! Здається, це не",
+
+  "js_new_ip": "Введіть новий ip",
+  "js_new_port": "Введіть новий порт",
+  "js_new_folder_path": "Введіть новий абсолютний шлях до папки з фотографіями на сервері",
+  "js_new_language": "Вкажіть необхідну локалізацію із вказаних",
+  "js_new_timeout": "Введіть нову затримку (в секундах)",
+
+  "months": {
+    "1": "січень",
+    "2": "лютий",
+    "3": "березень",
+    "4": "квітень",
+    "5": "травень",
+    "6": "червень",
+    "7": "липень",
+    "8": "серпень",
+    "9": "вересень",
+    "10": "жовтень",
+    "11": "листопад",
+    "12": "грудень"
+  }
+}
